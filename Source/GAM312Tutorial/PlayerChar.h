@@ -27,7 +27,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
+	// Functions to handle player movement and actions; further elaborated in the c++ file.
 	UFUNCTION()
 		void MoveForward(float axisValue);
 
