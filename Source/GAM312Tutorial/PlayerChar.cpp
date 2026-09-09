@@ -123,7 +123,7 @@ void APlayerChar::FindObject()
 					GiveResource(resourceValue, hitName);
 
 					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
+					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, TEXT("Resource Collected!"));
 					// Decal goes splat
 					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
 					
@@ -137,8 +137,13 @@ void APlayerChar::FindObject()
 				}
 			}
 		}
-		
+		else
+		{
+			check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
+		}
 	}
+	
 }
 
 ///////////////////////////
