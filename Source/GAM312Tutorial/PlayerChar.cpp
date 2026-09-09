@@ -2,6 +2,12 @@
 
 
 #include "PlayerChar.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/World.h"
+#include "Components/InputComponent.h"
+#include "Engine/Engine.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerChar::APlayerChar()
@@ -102,30 +108,36 @@ void APlayerChar::FindObject()
 	{
 		AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
 
-		if (HitResource)
+		if (Stamina > 5.0f) //Checks if stamina is there to consume first
 		{
-			FString hitName = HitResource->resourceName; //Gets the name of the resource hit
-			int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
-
-			HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
-
-			// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
-			if (HitResource->totalResource > resourceValue)
+			if (HitResource)
 			{
-				GiveResource(resourceValue, hitName);
+				FString hitName = HitResource->resourceName; //Gets the name of the resource hit
+				int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
 
-				check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
+				HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
+
+				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+				if (HitResource->totalResource > resourceValue)
+				{
+					GiveResource(resourceValue, hitName);
+
+					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected!"));
+					// Decal goes splat
+					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+					
+					SetStamina(-5.0f); //Consumes the stamina
+				}
+				else
+				{
+					HitResource->Destroy();
+					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
+				}
 			}
-			else
-			{
-				HitResource->Destroy();
-				check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
-			}	
-		
 		}
-
+		
 	}
 }
 

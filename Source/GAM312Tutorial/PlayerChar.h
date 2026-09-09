@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include "Resource_M.h" //Grants us access to our Resources!
+#include "Resource_M.h"
+#include "Kismet/GameplayStatics.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -74,6 +75,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Resources")
 	int Wood;
+	
+	UPROPERTY(EditAnywhere, Category = "HitMarker")
+		UMaterialInterface* hitDecal;
 
 	UPROPERTY(EditAnywhere, Category = "Resources")
 	int Stone;
