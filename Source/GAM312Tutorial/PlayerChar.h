@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Resource_M.h"
+#include "Kismet/GameplayStatics.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -68,6 +70,28 @@ public:
 		float Hunger = 100.0f;
 
 	///////////////////////////
+	// Properties to define the game's Resources, and the associated arrays.
+	///////////////////////////
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Wood;
+	
+	UPROPERTY(EditAnywhere, Category = "HitMarker")
+		UMaterialInterface* hitDecal;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Stone;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Berry;
+	// This is where the Resource Slots(START AT 0) in the Array are defined
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+	TArray<int> ResourcesArray;
+	// This is where the Resource Names are defined
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	TArray<FString> ResourcesNameArray;
+
+	///////////////////////////
 	// Functions that define the behavior of the player's stats. Defined within the C++ file.
 	///////////////////////////
 
@@ -82,5 +106,8 @@ public:
 		
 	UFUNCTION()
 		void DecreaseStats();
+
+	UFUNCTION()
+		void GiveResource(float amount, FString resourceType);
 
 };

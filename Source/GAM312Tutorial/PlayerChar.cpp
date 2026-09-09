@@ -2,6 +2,12 @@
 
 
 #include "PlayerChar.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/World.h"
+#include "Components/InputComponent.h"
+#include "Engine/Engine.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerChar::APlayerChar()
@@ -14,6 +20,11 @@ APlayerChar::APlayerChar()
 	PlayerCamComp->SetupAttachment(GetMesh(), "head");
 	// Sets the camera to use the pawn's control rotation
 	PlayerCamComp->bUsePawnControlRotation = true;
+	// Establishes the size of ResourcesArray, adds the names of the resources after.
+	ResourcesArray.SetNum(3);
+	ResourcesNameArray.Add(TEXT("Wood"));
+	ResourcesNameArray.Add(TEXT("Stone"));
+	ResourcesNameArray.Add(TEXT("Berry"));
 
 
 }
@@ -48,6 +59,7 @@ void APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("Turn", this, &APlayerChar::AddControllerYawInput);
 	PlayerInputComponent->BindAction("JumpEvent", IE_Pressed, this, &APlayerChar::StartJump);
 	PlayerInputComponent->BindAction("JumpEvent", IE_Released, this, &APlayerChar::StopJump);
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerChar::FindObject);
 }
 
 void APlayerChar::MoveForward(float axisValue)
@@ -76,8 +88,62 @@ void APlayerChar::StopJump()
 	bPressedJump = false;
 }
 
+///////////////////////////
+// This function serves as a RayCast, enabling Player Interactions via a left click.
+///////////////////////////
 void APlayerChar::FindObject()
 {
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCamComp->GetComponentLocation();
+	FVector Direction = PlayerCamComp->GetForwardVector() * 800.0f; // 800 units front of camera pos
+	FVector EndLocation = StartLocation + Direction;
+
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this); //Ignores self when casting
+	QueryParams.bTraceComplex = true; //Traces Complex Objects(Collision)
+	QueryParams.bReturnFaceIndex = true; //Returns the index of the face of the object hit
+
+	// This bit here is where the cast is performed, and returns the relevant information to the HitResult.
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))
+	{
+		AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
+
+		if (Stamina > 5.0f) //Checks if stamina is there to consume first
+		{
+			if (HitResource)
+			{
+				FString hitName = HitResource->resourceName; //Gets the name of the resource hit
+				int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
+
+				HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
+
+				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+				if (HitResource->totalResource > resourceValue)
+				{
+					GiveResource(resourceValue, hitName);
+
+					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, TEXT("Resource Collected!"));
+					// Decal goes splat
+					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+					
+					SetStamina(-5.0f); //Consumes the stamina
+				}
+				else
+				{
+					HitResource->Destroy();
+					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
+				}
+			}
+		}
+		else
+		{
+			check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
+		}
+	}
+	
 }
 
 ///////////////////////////
@@ -128,5 +194,26 @@ void APlayerChar::DecreaseStats()
 	if (Hunger <= 0)
 	{
 		SetHealth(-3.0f);
+	}
+}
+
+///////////////////////////
+// This function will add the amount of resources obtained to the player's ResourcesArray, 
+// based on the Resource Type passed by the RayCast.
+///////////////////////////
+
+void APlayerChar::GiveResource(float amount, FString resourceType)
+{
+	if (resourceType == "Wood")
+	{
+		ResourcesArray[0] = ResourcesArray[0] + amount;
+	}
+	if (resourceType == "Stone")
+	{
+		ResourcesArray[1] = ResourcesArray[1] + amount;
+	}
+	if (resourceType == "Berry")
+	{
+		ResourcesArray[2] = ResourcesArray[2] + amount;
 	}
 }
