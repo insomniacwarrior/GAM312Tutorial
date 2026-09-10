@@ -8,7 +8,7 @@ AResource_M::AResource_M()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	// Begin the creation of the Resource Object.
+	// Begin the creation(Model) of the Resource Object.
 	ResourceNameTxt = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Text Render"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	// Sets the Mesh as the Root Component of the Resource Object.

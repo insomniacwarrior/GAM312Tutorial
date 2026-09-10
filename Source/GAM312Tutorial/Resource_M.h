@@ -26,7 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	///////////////////////////
-	// Functions(Definitions) to handle resource collection and depletion; further elaborated in the c++ file.
+	// Functions(Definitions) to handle resource collection and depletion; Actual defining logic is in Playerchar.h
 	///////////////////////////
 	UPROPERTY(EditAnywhere)
 		FString resourceName = "Wood"; //Defaults to Wood; This value is passed to the Text Render(TEST).
@@ -35,7 +35,7 @@ public:
 		int resourceAmount = 5; //Defaults to 5, we get this on each res hit.
 
 	UPROPERTY(EditAnywhere)
-		int totalResource = 100; //Defaults to 100; the default total "health" of a resource before it is depleted.
+		int totalResource = 100; //Defaults to 100; the default total "health" of a resource.
 
 	UPROPERTY()
 		FText tempText;
