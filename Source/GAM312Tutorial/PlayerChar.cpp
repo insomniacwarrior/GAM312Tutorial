@@ -123,7 +123,14 @@ void APlayerChar::FindObject()
 					GiveResource(resourceValue, hitName);
 
 					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
-					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, TEXT("Resource Collected!"));
+					//This will be the variable passed into the string later for totals.
+					int32 PlayerTotal = 0;
+					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0]; //Go down the list, seeking out the hit resource.
+					else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
+					else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
+					//Formats the intended string before pushing it out to the debug message.
+					FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
+					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
 					// Decal goes splat
 					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
 					
@@ -132,14 +139,14 @@ void APlayerChar::FindObject()
 				else
 				{
 					HitResource->Destroy();
-					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					check(GEngine != nullptr);
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
 				}
 			}
 		}
 		else
 		{
-			check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+			check(GEngine != nullptr);
 			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
 		}
 	}

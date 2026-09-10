@@ -75,9 +75,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Resources")
 	int Wood;
-	
-	UPROPERTY(EditAnywhere, Category = "HitMarker")
-		UMaterialInterface* hitDecal;
 
 	UPROPERTY(EditAnywhere, Category = "Resources")
 	int Stone;
@@ -90,6 +87,9 @@ public:
 	// This is where the Resource Names are defined
 	UPROPERTY(EditAnywhere, Category = "Resources")
 	TArray<FString> ResourcesNameArray;
+	// Declares the hitDecal
+	UPROPERTY(EditAnywhere, Category = "HitMarker")
+		UMaterialInterface* hitDecal;
 
 	///////////////////////////
 	// Functions that define the behavior of the player's stats. Defined within the C++ file.
