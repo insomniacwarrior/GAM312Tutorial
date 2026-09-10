@@ -88,6 +88,28 @@ void APlayerChar::StopJump()
 	bPressedJump = false;
 }
 
+
+///////////////////////////
+// This function will add the amount of resources obtained to the player's ResourcesArray, 
+// based on the Resource Type passed by the RayCast.
+///////////////////////////
+
+void APlayerChar::GiveResource(float amount, FString resourceType)
+{
+	if (resourceType == "Wood")
+	{
+		ResourcesArray[0] = ResourcesArray[0] + amount;
+	}
+	if (resourceType == "Stone")
+	{
+		ResourcesArray[1] = ResourcesArray[1] + amount;
+	}
+	if (resourceType == "Berry")
+	{
+		ResourcesArray[2] = ResourcesArray[2] + amount;
+	}
+}
+
 ///////////////////////////
 // This function serves as a RayCast, enabling Player Interactions via a left click.
 ///////////////////////////
@@ -125,7 +147,8 @@ void APlayerChar::FindObject()
 					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
 					//This will be the variable passed into the string later for totals.
 					int32 PlayerTotal = 0;
-					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0]; //Go down the list, seeking out the hit resource.
+					//Go down the list, seeking out the hit resource.
+					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
 					else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
 					else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
 					//Formats the intended string before pushing it out to the debug message.
@@ -201,26 +224,5 @@ void APlayerChar::DecreaseStats()
 	if (Hunger <= 0)
 	{
 		SetHealth(-3.0f);
-	}
-}
-
-///////////////////////////
-// This function will add the amount of resources obtained to the player's ResourcesArray, 
-// based on the Resource Type passed by the RayCast.
-///////////////////////////
-
-void APlayerChar::GiveResource(float amount, FString resourceType)
-{
-	if (resourceType == "Wood")
-	{
-		ResourcesArray[0] = ResourcesArray[0] + amount;
-	}
-	if (resourceType == "Stone")
-	{
-		ResourcesArray[1] = ResourcesArray[1] + amount;
-	}
-	if (resourceType == "Berry")
-	{
-		ResourcesArray[2] = ResourcesArray[2] + amount;
 	}
 }
