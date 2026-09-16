@@ -1,0 +1,140 @@
+Index: Source/GAM312Tutorial/PlayerChar.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n\r\n#include \"PlayerChar.h\"\r\n#include \"Components/SkeletalMeshComponent.h\"\r\n#include \"Engine/World.h\"\r\n#include \"Components/InputComponent.h\"\r\n#include \"Engine/Engine.h\"\r\n#include \"TimerManager.h\"\r\n#include \"Kismet/GameplayStatics.h\"\r\n\r\n// Sets default values\r\nAPlayerChar::APlayerChar()\r\n{\r\n \t// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.\r\n\tPrimaryActorTick.bCanEverTick = true;\r\n\t// Creates a camera component\r\n\tPlayerCamComp = CreateDefaultSubobject<UCameraComponent>(TEXT(\"First Person Cam\"));\r\n\t// Takes the created camera, attaches it to where the head bone is one the character mesh\r\n\tPlayerCamComp->SetupAttachment(GetMesh(), \"head\");\r\n\t// Sets the camera to use the pawn's control rotation\r\n\tPlayerCamComp->bUsePawnControlRotation = true;\r\n\t// Establishes the size of ResourcesArray, adds the names of the resources after.\r\n\tResourcesArray.SetNum(3);\r\n\tResourcesNameArray.Add(TEXT(\"Wood\"));\r\n\tResourcesNameArray.Add(TEXT(\"Stone\"));\r\n\tResourcesNameArray.Add(TEXT(\"Berry\"));\r\n\t// Setup the Building Array; this should match the Resources Array count.\r\n\tBuildingArray.SetNum(3);\r\n\r\n\r\n}\r\n\r\n// Called when the game starts or when spawned\r\nvoid APlayerChar::BeginPlay()\r\n{\r\n\tSuper::BeginPlay();\r\n\r\n\t// Sets a timer to call the DecreaseStats function every 2 seconds\r\n\tFTimerHandle StatsTimerHandle;\r\n\tGetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);\r\n\r\n\t\r\n}\r\n\r\n// Called every frame\r\nvoid APlayerChar::Tick(float DeltaTime)\r\n{\r\n\tSuper::Tick(DeltaTime);\r\n\r\n\tif (isBuilding)\r\n\t{\r\n\t\tif (spawnedPart) //This provides the player with the location they can place an object until they click again.\r\n\t\t{\r\n\t\t\tFVector StartLocation = PlayerCamComp->GetComponentLocation();\r\n\t\t\tFVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;\r\n\t\t\tFVector EndLocation = StartLocation + Direction;\r\n\t\t\tspawnedPart->SetActorLocation(EndLocation);\r\n\t\t}\r\n\t}\r\n\t\r\n}\r\n\r\n// Called to bind functionality to input\r\nvoid APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)\r\n{\r\n\t// Binds the input axis and actions to the respective functions\r\n\tSuper::SetupPlayerInputComponent(PlayerInputComponent);\r\n\tPlayerInputComponent->BindAxis(\"MoveForward\", this, &APlayerChar::MoveForward);\r\n\tPlayerInputComponent->BindAxis(\"MoveRight\", this, &APlayerChar::MoveRight);\r\n\tPlayerInputComponent->BindAxis(\"LookUp\", this, &APlayerChar::AddControllerPitchInput);\r\n\tPlayerInputComponent->BindAxis(\"Turn\", this, &APlayerChar::AddControllerYawInput);\r\n\tPlayerInputComponent->BindAction(\"JumpEvent\", IE_Pressed, this, &APlayerChar::StartJump);\r\n\tPlayerInputComponent->BindAction(\"JumpEvent\", IE_Released, this, &APlayerChar::StopJump);\r\n\tPlayerInputComponent->BindAction(\"Interact\", IE_Pressed, this, &APlayerChar::FindObject);\r\n\tPlayerInputComponent->BindAction(\"RotPart\", IE_Pressed, this, &APlayerChar::RotateBuilding);\r\n}\r\n\r\nvoid APlayerChar::MoveForward(float axisValue)\r\n{\r\n\t// Gets the forward direction of the player based on the control rotation and adds movement input in that direction\r\n\tFVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);\r\n\tAddMovementInput(Direction, axisValue);\r\n}\r\n\r\nvoid APlayerChar::MoveRight(float axisValue)\r\n{\r\n\t// Gets the right direction of the player based on the control rotation and adds movement input in that direction\r\n\tFVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);\r\n\tAddMovementInput(Direction, axisValue);\r\n}\r\n\r\nvoid APlayerChar::StartJump()\r\n{\r\n\t// Simple jump bool\r\n\tbPressedJump = true;\r\n}\r\n\r\nvoid APlayerChar::StopJump()\r\n{\r\n\t// SImple jump bool\r\n\tbPressedJump = false;\r\n}\r\n\r\n\r\n///////////////////////////\r\n// This function will add the amount of resources obtained to the player's ResourcesArray, \r\n// based on the Resource Type passed by the RayCast.\r\n///////////////////////////\r\n\r\nvoid APlayerChar::GiveResource(float amount, FString resourceType)\r\n{\r\n\tif (resourceType == \"Wood\")\r\n\t{\r\n\t\tResourcesArray[0] = ResourcesArray[0] + amount;\r\n\t}\r\n\tif (resourceType == \"Stone\")\r\n\t{\r\n\t\tResourcesArray[1] = ResourcesArray[1] + amount;\r\n\t}\r\n\tif (resourceType == \"Berry\")\r\n\t{\r\n\t\tResourcesArray[2] = ResourcesArray[2] + amount;\r\n\t}\r\n}\r\n\r\n///////////////////////////\r\n// This function serves as a RayCast, enabling Player Interactions via a left click.\r\n///////////////////////////\r\nvoid APlayerChar::FindObject()\r\n{\r\n\tFHitResult HitResult;\r\n\tFVector StartLocation = PlayerCamComp->GetComponentLocation();\r\n\tFVector Direction = PlayerCamComp->GetForwardVector() * 800.0f; // 800 units front of camera pos\r\n\tFVector EndLocation = StartLocation + Direction;\r\n\r\n\tFCollisionQueryParams QueryParams;\r\n\tQueryParams.AddIgnoredActor(this); //Ignores self when casting\r\n\tQueryParams.bTraceComplex = true; //Traces Complex Objects(Collision)\r\n\tQueryParams.bReturnFaceIndex = true; //Returns the index of the face of the object hit\r\n\t\r\n\tif (!isBuilding) //Checks if the player is not building before the actual cast.\r\n\t{\r\n\t\t// This bit here is where the cast is performed, and returns the relevant information to the HitResult.\r\n\t\tif (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))\r\n\t\t{\r\n\t\t\tAResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource\r\n\r\n\t\t\t\t// If the resource has \"health\" remaining, collect it. Otherwise, Destroy it.\r\n\t\t\t\tif (HitResource->totalResource > resourceValue)\r\n\t\t\t\t{\r\n\t\t\t\t\tGiveResource(resourceValue, hitName);\r\n\r\n\t\t\t\t\tcheck(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.\r\n\t\t\t\t\t//This will be the variable passed into the string later for totals.\r\n\t\t\t\t\tint32 PlayerTotal = 0;\r\n\t\t\t\t\t//Go down the list, seeking out the hit resource.\r\n\t\t\t\t\tif (hitName == \"Wood\")   PlayerTotal = ResourcesArray[0];\r\n\t\t\t\t\telse if (hitName == \"Stone\")  PlayerTotal = ResourcesArray[1];\r\n\t\t\t\t\telse if (hitName == \"Berry\")  PlayerTotal = ResourcesArray[2];\r\n\t\t\t\t\t//Formats the intended string before pushing it out to the debug message.\r\n\t\t\t\t\tFString ResMessage = FString::Printf(TEXT(\"Total %s collected: %d\"), *hitName, PlayerTotal);\r\n\t\t\t\t\tGEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);\r\n\t\t\t\t\t// Decal goes splat\r\n\t\t\t\t\tUGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);\r\n\t\t\t\t\t\r\n\t\t\t\t\tSetStamina(-5.0f); //Consumes the stamina\r\n\t\t\t\t}\r\n\t\t\t\telse\r\n\t\t\t\t{\r\n\t\t\t\t\tFString hitName = HitResource->resourceName; //Gets the name of the resource hit\r\n\t\t\t\t\tint resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained\r\n\r\n\t\t\t\t\tHitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total \"health\" of the hit resource.\r\n\r\n\t\t\t\t\t// If the resource has \"health\" remaining, collect it. Otherwise, Destroy it.\r\n\t\t\t\t\tif (HitResource->totalResource > resourceValue)\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tGiveResource(resourceValue, hitName);\r\n\r\n\t\t\t\t\t\tcheck(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.\r\n\t\t\t\t\t\t//This will be the variable passed into the string later for totals.\r\n\t\t\t\t\t\tint32 PlayerTotal = 0;\r\n\t\t\t\t\t\t//Go down the list, seeking out the hit resource.\r\n\t\t\t\t\t\tif (hitName == \"Wood\")   PlayerTotal = ResourcesArray[0];\r\n\t\t\t\t\t\telse if (hitName == \"Stone\")  PlayerTotal = ResourcesArray[1];\r\n\t\t\t\t\t\telse if (hitName == \"Berry\")  PlayerTotal = ResourcesArray[2];\r\n\t\t\t\t\t\t//Formats the intended string before pushing it out to the debug message.\r\n\t\t\t\t\t\tFString ResMessage = FString::Printf(TEXT(\"Total %s collected: %d\"), *hitName, PlayerTotal);\r\n\t\t\t\t\t\tGEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);\r\n\t\t\t\t\t\t// Decal goes splat\r\n\t\t\t\t\t\tUGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tSetStamina(-5.0f); //Consumes the stamina\r\n\t\t\t\t\t}\r\n\t\t\t\t\telse\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tHitResource->Destroy();\r\n\t\t\t\t\t\tcheck(GEngine != nullptr);\r\n\t\t\t\t\t\tGEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT(\"Resource Depleted!\"));\t\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t\telse\r\n\t\t\t{\r\n\t\t\t\tcheck(GEngine != nullptr);\r\n\t\t\t\tGEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT(\"You are too tired to gather the resource at the moment.\"));\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\t\r\n\telse\r\n\t{\r\n\t\tisBuilding = false;\r\n\t\t\r\n\t}\r\n\t\r\n}\r\n\r\n///////////////////////////\r\n// These functions determine the mechanic for ADDING TO the player's stats.\r\n///////////////////////////\r\n\r\nvoid APlayerChar::SetHealth(float amount)\r\n{\r\n\tif (Health + amount < 100)\r\n\t{\r\n\t\tHealth = Health + amount;\r\n\t}\r\n\telse if (Health + amount >= 100)\r\n\t{\r\n\t\tHealth = 100;\r\n\t}\r\n}\r\n\r\nvoid APlayerChar::SetHunger(float amount)\r\n{\r\n\tif (Hunger + amount < 100)\r\n\t{\r\n\t\tHunger = Hunger + amount;\r\n\r\n\t}\r\n\telse if (Hunger + amount >= 100)\r\n\t{\r\n\t\tHunger = 100;\r\n\t}\r\n}\r\n\r\nvoid APlayerChar::SetStamina(float amount)\r\n{\r\n\tif (Stamina + amount < 100)\r\n\t{\r\n\t\tStamina = Stamina + amount;\r\n\r\n\t}\r\n\telse if (Stamina + amount >= 100)\r\n\t{\r\n\t\tStamina = 100;\r\n\t}\r\n}\r\n\r\n///////////////////////////\r\n// This function will essentially trade hunger to regenerate stamina on each iteration.\r\n// If the player has no more hunger, this instead eats into their remaining health.\r\n///////////////////////////\r\n\r\nvoid APlayerChar::DecreaseStats()\r\n{\r\n\tif (Hunger > 0)\r\n\t{\r\n\t\tSetHunger(-1.0f);\r\n\t}\r\n\t\r\n\tSetStamina(10.0f);\r\n\r\n\tif (Hunger <= 0)\r\n\t{\r\n\t\tSetHealth(-3.0f);\r\n\t}\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/GAM312Tutorial/PlayerChar.cpp b/Source/GAM312Tutorial/PlayerChar.cpp
+--- a/Source/GAM312Tutorial/PlayerChar.cpp	(revision e17c20621a6e197e0582e1c2f63fad920163f4f8)
++++ b/Source/GAM312Tutorial/PlayerChar.cpp	(date 1789579999086)
+@@ -146,75 +146,73 @@
+ 		{
+ 			AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
+ 
+-				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+-				if (HitResource->totalResource > resourceValue)
+-				{
+-					GiveResource(resourceValue, hitName);
++			// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
++			if (HitResource->totalResource > resourceValue)
++			{
++				GiveResource(resourceValue, hitName);
+ 
+-					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+-					//This will be the variable passed into the string later for totals.
+-					int32 PlayerTotal = 0;
+-					//Go down the list, seeking out the hit resource.
+-					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
+-					else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
+-					else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
+-					//Formats the intended string before pushing it out to the debug message.
+-					FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
+-					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
+-					// Decal goes splat
+-					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
++				check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
++				//This will be the variable passed into the string later for totals.
++				int32 PlayerTotal = 0;
++				//Go down the list, seeking out the hit resource.
++				if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
++				else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
++				else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
++				//Formats the intended string before pushing it out to the debug message.
++				FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
++				GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
++				// Decal goes splat
++				UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+ 					
+-					SetStamina(-5.0f); //Consumes the stamina
+-				}
+-				else
+-				{
+-					FString hitName = HitResource->resourceName; //Gets the name of the resource hit
+-					int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
++				SetStamina(-5.0f); //Consumes the stamina
++			}
++			else
++			{
++				FString hitName = HitResource->resourceName; //Gets the name of the resource hit
++				int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
+ 
+-					HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
++				HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
+ 
+-					// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+-					if (HitResource->totalResource > resourceValue)
+-					{
+-						GiveResource(resourceValue, hitName);
++				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
++				if (HitResource->totalResource > resourceValue)
++				{
++					GiveResource(resourceValue, hitName);
+ 
+-						check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+-						//This will be the variable passed into the string later for totals.
+-						int32 PlayerTotal = 0;
+-						//Go down the list, seeking out the hit resource.
+-						if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
+-						else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
+-						else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
+-						//Formats the intended string before pushing it out to the debug message.
+-						FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
+-						GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
+-						// Decal goes splat
+-						UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
++					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
++					//This will be the variable passed into the string later for totals.
++					int32 PlayerTotal = 0;
++					//Go down the list, seeking out the hit resource.
++					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
++					else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
++					else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
++					//Formats the intended string before pushing it out to the debug message.
++					FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
++					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
++					// Decal goes splat
++					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+ 						
+-						SetStamina(-5.0f); //Consumes the stamina
+-					}
+-					else
+-					{
+-						HitResource->Destroy();
+-						check(GEngine != nullptr);
+-						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
+-					}
+-				}
+-			}
+-			else
+-			{
+-				check(GEngine != nullptr);
+-				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
+-			}
++					SetStamina(-5.0f); //Consumes the stamina
++				}
++				else
++				{
++					HitResource->Destroy();
++					check(GEngine != nullptr);
++					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
++				}
++			}
++		}
++		else
++		{
++			check(GEngine != nullptr);
++			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
+ 		}
+ 	}
+-	
+ 	else
+ 	{
+ 		isBuilding = false;
+ 		
+ 	}
+-	
++}
+ }
+ 
+ ///////////////////////////
