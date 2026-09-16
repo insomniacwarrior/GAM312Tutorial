@@ -25,6 +25,8 @@ APlayerChar::APlayerChar()
 	ResourcesNameArray.Add(TEXT("Wood"));
 	ResourcesNameArray.Add(TEXT("Stone"));
 	ResourcesNameArray.Add(TEXT("Berry"));
+	// Setup the Building Array; this should match the Resources Array count.
+	BuildingArray.SetNum(3);
 
 
 }
@@ -46,6 +48,17 @@ void APlayerChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (isBuilding)
+	{
+		if (spawnedPart) //This provides the player with the location they can place an object until they click again.
+		{
+			FVector StartLocation = PlayerCamComp->GetComponentLocation();
+			FVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;
+			FVector EndLocation = StartLocation + Direction;
+			spawnedPart->SetActorLocation(EndLocation);
+		}
+	}
+	
 }
 
 // Called to bind functionality to input
@@ -60,6 +73,7 @@ void APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("JumpEvent", IE_Pressed, this, &APlayerChar::StartJump);
 	PlayerInputComponent->BindAction("JumpEvent", IE_Released, this, &APlayerChar::StopJump);
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerChar::FindObject);
+	PlayerInputComponent->BindAction("RotPart", IE_Pressed, this, &APlayerChar::RotateBuilding);
 }
 
 void APlayerChar::MoveForward(float axisValue)
@@ -124,20 +138,13 @@ void APlayerChar::FindObject()
 	QueryParams.AddIgnoredActor(this); //Ignores self when casting
 	QueryParams.bTraceComplex = true; //Traces Complex Objects(Collision)
 	QueryParams.bReturnFaceIndex = true; //Returns the index of the face of the object hit
-
-	// This bit here is where the cast is performed, and returns the relevant information to the HitResult.
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))
+	
+	if (!isBuilding) //Checks if the player is not building before the actual cast.
 	{
-		AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
-
-		if (Stamina > 5.0f) //Checks if stamina is there to consume first
+		// This bit here is where the cast is performed, and returns the relevant information to the HitResult.
+		if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))
 		{
-			if (HitResource)
-			{
-				FString hitName = HitResource->resourceName; //Gets the name of the resource hit
-				int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
-
-				HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
+			AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
 
 				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
 				if (HitResource->totalResource > resourceValue)
@@ -161,17 +168,51 @@ void APlayerChar::FindObject()
 				}
 				else
 				{
-					HitResource->Destroy();
-					check(GEngine != nullptr);
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
+					FString hitName = HitResource->resourceName; //Gets the name of the resource hit
+					int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
+
+					HitResource->totalResource = HitResource->totalResource - resourceValue; //Decreases the total "health" of the hit resource.
+
+					// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+					if (HitResource->totalResource > resourceValue)
+					{
+						GiveResource(resourceValue, hitName);
+
+						check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+						//This will be the variable passed into the string later for totals.
+						int32 PlayerTotal = 0;
+						//Go down the list, seeking out the hit resource.
+						if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
+						else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
+						else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
+						//Formats the intended string before pushing it out to the debug message.
+						FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
+						GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
+						// Decal goes splat
+						UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+						
+						SetStamina(-5.0f); //Consumes the stamina
+					}
+					else
+					{
+						HitResource->Destroy();
+						check(GEngine != nullptr);
+						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted!"));	
+					}
 				}
 			}
+			else
+			{
+				check(GEngine != nullptr);
+				GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
+			}
 		}
-		else
-		{
-			check(GEngine != nullptr);
-			GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("You are too tired to gather the resource at the moment."));
-		}
+	}
+	
+	else
+	{
+		isBuilding = false;
+		
 	}
 	
 }
@@ -185,7 +226,10 @@ void APlayerChar::SetHealth(float amount)
 	if (Health + amount < 100)
 	{
 		Health = Health + amount;
-
+	}
+	else if (Health + amount >= 100)
+	{
+		Health = 100;
 	}
 }
 
@@ -196,6 +240,10 @@ void APlayerChar::SetHunger(float amount)
 		Hunger = Hunger + amount;
 
 	}
+	else if (Hunger + amount >= 100)
+	{
+		Hunger = 100;
+	}
 }
 
 void APlayerChar::SetStamina(float amount)
@@ -204,6 +252,10 @@ void APlayerChar::SetStamina(float amount)
 	{
 		Stamina = Stamina + amount;
 
+	}
+	else if (Stamina + amount >= 100)
+	{
+		Stamina = 100;
 	}
 }
 
