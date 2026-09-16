@@ -124,7 +124,6 @@ void APlayerChar::GiveResource(float amount, FString resourceType)
 	}
 }
 
-
 ///////////////////////////
 // This function serves as a RayCast, enabling Player Interactions via a left click.
 ///////////////////////////
@@ -147,9 +146,27 @@ void APlayerChar::FindObject()
 		{
 			AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor()); //Sets variable to HitResource if ray hits an actual resource
 
-			if (Stamina > 5.0f) //Checks if stamina is there to consume first
-			{
-				if (HitResource)
+				// If the resource has "health" remaining, collect it. Otherwise, Destroy it.
+				if (HitResource->totalResource > resourceValue)
+				{
+					GiveResource(resourceValue, hitName);
+
+					check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
+					//This will be the variable passed into the string later for totals.
+					int32 PlayerTotal = 0;
+					//Go down the list, seeking out the hit resource.
+					if (hitName == "Wood")   PlayerTotal = ResourcesArray[0];
+					else if (hitName == "Stone")  PlayerTotal = ResourcesArray[1];
+					else if (hitName == "Berry")  PlayerTotal = ResourcesArray[2];
+					//Formats the intended string before pushing it out to the debug message.
+					FString ResMessage = FString::Printf(TEXT("Total %s collected: %d"), *hitName, PlayerTotal);
+					GEngine->AddOnScreenDebugMessage(-1, 1.5f, FColor::Green, ResMessage);
+					// Decal goes splat
+					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f,10.0f,10.0f), HitResult.Location, FRotator(-90, 0,0), 2.0f);
+					
+					SetStamina(-5.0f); //Consumes the stamina
+				}
+				else
 				{
 					FString hitName = HitResource->resourceName; //Gets the name of the resource hit
 					int resourceValue = HitResource->resourceAmount; //Gets the amount of the resource obtained
@@ -259,73 +276,5 @@ void APlayerChar::DecreaseStats()
 	if (Hunger <= 0)
 	{
 		SetHealth(-3.0f);
-	}
-}
-
-///////////////////////////
-// These functions will handle the updating of resources and basic building mechanics.
-///////////////////////////
-
-void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString buildingObject)
-{
-	// Updates our Resource Count and adds the building to its respective array.
-	if (woodAmount <= ResourcesArray[0])
-	{
-		if (stoneAmount <= ResourcesArray[1])
-		{
-			ResourcesArray[0] = ResourcesArray[0] - woodAmount;
-			ResourcesArray[1] = ResourcesArray[1] - stoneAmount;
-			
-			if (buildingObject == "Wall")
-			{
-				BuildingArray[0] = BuildingArray[0] + 1;
-			}
-			
-			if (buildingObject == "Floor")
-			{
-				BuildingArray[1] = BuildingArray[1] + 1;
-			}
-			
-			if (buildingObject == "Ceiling")
-			{
-				BuildingArray[2] = BuildingArray[2] + 1;
-			}
-			
-		}
-	}
-}
-
-void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
-{
-	if (!isBuilding)
-	{
-		if (BuildingArray[buildingID] >= 1) //Checks to see if the player has any of the object passed through
-		{
-			isBuilding = true;
-			FActorSpawnParameters SpawnParams;
-			FVector StartLocation = PlayerCamComp->GetComponentLocation();
-			FVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;
-			FVector EndLocation = StartLocation + Direction;
-			FRotator myRot(0, 0, 0);
-			
-			BuildingArray[buildingID] = BuildingArray[buildingID] - 1;
-			
-			spawnedPart = GetWorld()->SpawnActor<ABuildingPart>(BuildPartClass, EndLocation, myRot, SpawnParams);
-			
-			isSuccess = true;
-		}
-	}
-	else
-		isSuccess = false;
-	{
-		
-	}
-}
-
-void APlayerChar::RotateBuilding()
-{
-	if (isBuilding)
-	{
-		spawnedPart->AddActorWorldRotation(FRotator(0, 90, 0));
 	}
 }
