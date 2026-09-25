@@ -13,7 +13,18 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="" />
+    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_16_2026_12_35_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_16_2026_12_35_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GAM312Tutorial.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/GAM312Tutorial.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/GAM312Tutorial.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/GAM312Tutorial.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,9 +43,9 @@
     <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/CoreUObject/Public/Templates/Casts.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/HNZZ1/Documents/GAM312/GAM312Tutorial/Source/GAM312Tutorial/PlayerChar.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/GAM312Tutorial/AUContrTut.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -42,61 +53,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.000000000000034" />
-      <entry key="MS500" value="1.0020248068379292" />
-      <entry key="S2" value="1.2121458183123233" />
-      <entry key="S5" value="1.5563480245354704" />
-      <entry key="S10" value="1.9240274896989704" />
-      <entry key="S30" value="2.861447805678571" />
-      <entry key="S60" value="3.6093159270118536" />
-      <entry key="M2" value="4.423295335226161" />
-      <entry key="M5" value="9.321791648655894" />
-      <entry key="M10" value="38.678480720031324" />
-      <entry key="M15" value="77.91909812896452" />
-      <entry key="M30" value="172.73809420051032" />
-      <entry key="H1" value="265.7077694479855" />
-      <entry key="H2" value="332.05808109116356" />
-      <entry key="H4" value="371.8906431341653" />
-      <entry key="D1" value="409.0849783834055" />
-      <entry key="W1" value="415.8591419179927" />
+      <entry key="MS100" value="1.0000000000084537" />
+      <entry key="MS500" value="1.0094092213198063" />
+      <entry key="S2" value="1.5197240066170852" />
+      <entry key="S5" value="2.165873506651673" />
+      <entry key="S10" value="2.5268441764850578" />
+      <entry key="S30" value="2.828659503135607" />
+      <entry key="S60" value="2.9403918564560954" />
+      <entry key="M2" value="3.1299978615468365" />
+      <entry key="M5" value="4.169123639322492" />
+      <entry key="M10" value="12.193815725152042" />
+      <entry key="M15" value="28.867833894268504" />
+      <entry key="M30" value="102.95299208107168" />
+      <entry key="H1" value="245.46443074010446" />
+      <entry key="H2" value="408.02648663078116" />
+      <entry key="H4" value="536.0883377027831" />
+      <entry key="D1" value="679.340529264007" />
+      <entry key="W1" value="708.0771265660082" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="1.477142990506585E-100" />
-      <entry key="S2" value="1.1024417060142484E-25" />
-      <entry key="S5" value="1.039781901464754E-10" />
-      <entry key="S10" value="1.0196969655072794E-5" />
-      <entry key="S30" value="0.02168488095424678" />
-      <entry key="S60" value="0.14725820296644243" />
-      <entry key="M2" value="0.3852664764819351" />
-      <entry key="M5" value="0.9734670136958389" />
-      <entry key="M10" value="3.016984953386195" />
-      <entry key="M15" value="5.677854634930591" />
-      <entry key="M30" value="12.384655696443591" />
-      <entry key="H1" value="19.2838837643336" />
-      <entry key="H2" value="24.35754238317236" />
-      <entry key="H4" value="27.453532974395344" />
-      <entry key="D1" value="30.374795067580266" />
-      <entry key="W1" value="30.90980935114175" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="1.7583065326725964E-293" />
+      <entry key="S5" value="8.320230034116012E-118" />
+      <entry key="S10" value="3.925561970218829E-59" />
+      <entry key="S30" value="9.62876543943952E-20" />
+      <entry key="S60" value="8.590163604060172E-10" />
+      <entry key="M2" value="8.627712491941941E-5" />
+      <entry key="M5" value="0.09341871641232526" />
+      <entry key="M10" value="1.1213694438993302" />
+      <entry key="M15" value="2.853079643731103" />
+      <entry key="M30" value="8.95602295463826" />
+      <entry key="H1" value="19.407031609890268" />
+      <entry key="H2" value="31.066105443059676" />
+      <entry key="H4" value="40.25296821366242" />
+      <entry key="D1" value="50.56899046457738" />
+      <entry key="W1" value="52.644278983099525" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="5.6947814424854354E-5" />
-      <entry key="MS500" value="0.14182038714787398" />
-      <entry key="S2" value="0.7338213951558303" />
-      <entry key="S5" value="1.266707502734233" />
-      <entry key="S10" value="1.735184100699039" />
-      <entry key="S30" value="2.786802173386757" />
-      <entry key="S60" value="3.695527976542554" />
-      <entry key="M2" value="4.771056631063605" />
-      <entry key="M5" value="10.265240736569455" />
-      <entry key="M10" value="41.64124272044813" />
-      <entry key="M15" value="83.52754870413759" />
-      <entry key="M30" value="185.04858320475722" />
-      <entry key="H1" value="284.93529641447816" />
-      <entry key="H2" value="356.38055832549605" />
-      <entry key="H4" value="399.32457310929067" />
-      <entry key="D1" value="439.45618365801226" />
-      <entry key="W1" value="446.7684300410294" />
+      <entry key="MS100" value="2.0943774652043518E-11" />
+      <entry key="MS500" value="0.010950888960468813" />
+      <entry key="S2" value="0.6130146761711346" />
+      <entry key="S5" value="1.5368846143344195" />
+      <entry key="S10" value="2.1330977304247396" />
+      <entry key="S30" value="2.674222348072432" />
+      <entry key="S60" value="2.8588000505881346" />
+      <entry key="M2" value="3.0856855173050204" />
+      <entry key="M5" value="4.238578544486404" />
+      <entry key="M10" value="13.283446553649503" />
+      <entry key="M15" value="31.676044200162234" />
+      <entry key="M30" value="111.84271512625833" />
+      <entry key="H1" value="264.8019220244417" />
+      <entry key="H2" value="439.03845981337963" />
+      <entry key="H4" value="576.3068370413015" />
+      <entry key="D1" value="729.9024169649484" />
+      <entry key="W1" value="760.7203522488653" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -111,28 +122,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Uproject.GAM312Tutorial.executor": "Run",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "BuildingMode",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "UnrealLinkOptionsId"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Uproject.GAM312Tutorial.executor&quot;: &quot;Run&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;HUDAI&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="GAM312Tutorial" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">

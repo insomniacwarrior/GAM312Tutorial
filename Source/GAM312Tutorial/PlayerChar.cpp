@@ -47,10 +47,14 @@ void APlayerChar::BeginPlay()
 void APlayerChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
+	//Updates the player's survival stats every tick
+	playerUI->UpdateBars(Health, Hunger, Stamina);
+	
+	//This provides the player with the location they can place an object until they click again.
 	if (isBuilding)
 	{
-		if (spawnedPart) //This provides the player with the location they can place an object until they click again.
+		if (spawnedPart)
 		{
 			FVector StartLocation = PlayerCamComp->GetComponentLocation();
 			FVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;
@@ -263,7 +267,7 @@ void APlayerChar::DecreaseStats()
 }
 
 ///////////////////////////
-// These functions will handle the updating of resources and basic building mechanics.
+// These functions will handle the updating of resources when adding to the crafted building inventory.
 ///////////////////////////
 
 void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString buildingObject)
@@ -294,7 +298,7 @@ void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString b
 		}
 	}
 }
-
+//This is the actual building function; it will pass through whether building was a success or not as well.
 void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 {
 	if (!isBuilding)
@@ -321,7 +325,7 @@ void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 		
 	}
 }
-
+//Enables us to rotate the building part while we're in the middle of the build function.
 void APlayerChar::RotateBuilding()
 {
 	if (isBuilding)
