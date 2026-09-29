@@ -13,18 +13,7 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_16_2026_12_35_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/shelf/Uncommitted_changes_before_Checkout_at_9_16_2026_12_35_PM__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GAM312Tutorial.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/GAM312Tutorial.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/GAM312Tutorial.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/GAM312Tutorial.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" afterDir="false" />
-    </list>
+    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="devpass" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
