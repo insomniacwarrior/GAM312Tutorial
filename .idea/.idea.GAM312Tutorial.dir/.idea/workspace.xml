@@ -13,7 +13,18 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="" />
+    <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AIChartut/AICharTut_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AIChartut/AICharTut_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Resources/Berry_Resource.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Resources/Berry_Resource.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Resources/Stone_Resource.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Resources/Stone_Resource.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Resources/Wood_Resource.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Resources/Wood_Resource.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Widgets/Crafting_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/Crafting_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,6 +45,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/CoreUObject/Public/Templates/Casts.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/Engine/Classes/Engine/EngineBaseTypes.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/GAM312Tutorial/AUContrTut.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="McpProjectServerCommands">
@@ -42,61 +54,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0000000000084537" />
-      <entry key="MS500" value="1.0094092213198063" />
-      <entry key="S2" value="1.5197240066170852" />
-      <entry key="S5" value="2.165873506651673" />
-      <entry key="S10" value="2.5268441764850578" />
-      <entry key="S30" value="2.828659503135607" />
-      <entry key="S60" value="2.9403918564560954" />
-      <entry key="M2" value="3.1299978615468365" />
-      <entry key="M5" value="4.169123639322492" />
-      <entry key="M10" value="12.193815725152042" />
-      <entry key="M15" value="28.867833894268504" />
-      <entry key="M30" value="102.95299208107168" />
-      <entry key="H1" value="245.46443074010446" />
-      <entry key="H2" value="408.02648663078116" />
-      <entry key="H4" value="536.0883377027831" />
-      <entry key="D1" value="679.340529264007" />
-      <entry key="W1" value="708.0771265660082" />
+      <entry key="MS100" value="1.5433679677370173" />
+      <entry key="MS500" value="1.9475063503173249" />
+      <entry key="S2" value="3.216693635378631" />
+      <entry key="S5" value="5.4189899535787704" />
+      <entry key="S10" value="7.13709475201096" />
+      <entry key="S30" value="8.874090591904721" />
+      <entry key="S60" value="9.415262946047235" />
+      <entry key="M2" value="9.91766503865369" />
+      <entry key="M5" value="12.673014467029782" />
+      <entry key="M10" value="18.634313139282856" />
+      <entry key="M15" value="28.02396877174651" />
+      <entry key="M30" value="75.51097592892368" />
+      <entry key="H1" value="200.80856691963598" />
+      <entry key="H2" value="392.15190858164243" />
+      <entry key="H4" value="574.069637905058" />
+      <entry key="D1" value="806.3319554456955" />
+      <entry key="W1" value="856.3258241805642" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="1.7583065326725964E-293" />
-      <entry key="S5" value="8.320230034116012E-118" />
-      <entry key="S10" value="3.925561970218829E-59" />
-      <entry key="S30" value="9.62876543943952E-20" />
-      <entry key="S60" value="8.590163604060172E-10" />
-      <entry key="M2" value="8.627712491941941E-5" />
-      <entry key="M5" value="0.09341871641232526" />
-      <entry key="M10" value="1.1213694438993302" />
-      <entry key="M15" value="2.853079643731103" />
-      <entry key="M30" value="8.95602295463826" />
-      <entry key="H1" value="19.407031609890268" />
-      <entry key="H2" value="31.066105443059676" />
-      <entry key="H4" value="40.25296821366242" />
-      <entry key="D1" value="50.56899046457738" />
-      <entry key="W1" value="52.644278983099525" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="3.947830285782554E-176" />
+      <entry key="S10" value="3.417252591953109E-88" />
+      <entry key="S30" value="1.760253085675619E-29" />
+      <entry key="S60" value="9.668664063072912E-15" />
+      <entry key="M2" value="2.488234562569027E-7" />
+      <entry key="M5" value="0.007624442619347034" />
+      <entry key="M10" value="0.26357883786011754" />
+      <entry key="M15" value="0.9555530804308973" />
+      <entry key="M30" value="4.644850958523912" />
+      <entry key="H1" value="13.9615104824109" />
+      <entry key="H2" value="27.85411622096952" />
+      <entry key="H4" value="40.990211335053445" />
+      <entry key="D1" value="57.760140334633526" />
+      <entry key="W1" value="61.37300146412054" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="2.0943774652043518E-11" />
-      <entry key="MS500" value="0.010950888960468813" />
-      <entry key="S2" value="0.6130146761711346" />
-      <entry key="S5" value="1.5368846143344195" />
-      <entry key="S10" value="2.1330977304247396" />
-      <entry key="S30" value="2.674222348072432" />
-      <entry key="S60" value="2.8588000505881346" />
-      <entry key="M2" value="3.0856855173050204" />
-      <entry key="M5" value="4.238578544486404" />
-      <entry key="M10" value="13.283446553649503" />
-      <entry key="M15" value="31.676044200162234" />
-      <entry key="M30" value="111.84271512625833" />
-      <entry key="H1" value="264.8019220244417" />
-      <entry key="H2" value="439.03845981337963" />
-      <entry key="H4" value="576.3068370413015" />
-      <entry key="D1" value="729.9024169649484" />
-      <entry key="W1" value="760.7203522488653" />
+      <entry key="MS100" value="0.8645412359476454" />
+      <entry key="MS500" value="1.07213623815366" />
+      <entry key="S2" value="2.5247341194113315" />
+      <entry key="S5" value="4.923445546220767" />
+      <entry key="S10" value="6.807571536589048" />
+      <entry key="S30" value="8.736830802388962" />
+      <entry key="S60" value="9.342354878924574" />
+      <entry key="M2" value="9.879002309266559" />
+      <entry key="M5" value="12.65968107276598" />
+      <entry key="M10" value="18.879547419439643" />
+      <entry key="M15" value="28.957154496760477" />
+      <entry key="M30" value="80.11772531484434" />
+      <entry key="H1" value="214.71743476236668" />
+      <entry key="H2" value="419.9555736889786" />
+      <entry key="H4" value="615.0235407912463" />
+      <entry key="D1" value="864.0837355104907" />
+      <entry key="W1" value="917.6975610511739" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -123,7 +135,7 @@
     &quot;Uproject.GAM312Tutorial.executor&quot;: &quot;Run&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;HUDAI&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Objectives&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,

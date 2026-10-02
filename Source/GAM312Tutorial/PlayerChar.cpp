@@ -39,7 +39,12 @@ void APlayerChar::BeginPlay()
 	// Sets a timer to call the DecreaseStats function every 2 seconds
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
-
+	//If object widget is valid, initialize with these values.
+	if (objWidget)
+	{
+		objWidget->UpdatebuildObj(0.0f);
+		objWidget->UpdatematObj(0.0f);
+	}
 	
 }
 
@@ -164,6 +169,10 @@ void APlayerChar::FindObject()
 					if (HitResource->totalResource > resourceValue)
 					{
 						GiveResource(resourceValue, hitName);
+						
+						matsCollected = matsCollected + resourceValue; //addon for objectives widget, tracks mats gathered for obj.
+						
+						objWidget->UpdatematObj(matsCollected);//addon for objectives widget
 
 						check(GEngine != nullptr); //Ensures the engine's subsystem can display the text before firing.
 						//This will be the variable passed into the string later for totals.
@@ -199,7 +208,9 @@ void APlayerChar::FindObject()
 	else
 	{
 		isBuilding = false;
+		objectsBuilt = objectsBuilt + 1.0f; //increases the objects built counter when ran
 		
+		objWidget->UpdatebuildObj(objectsBuilt);
 	}
 	
 }

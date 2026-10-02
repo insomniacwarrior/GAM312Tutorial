@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
 #include "PlayerWidget.h"
+#include "ObjectiveWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -111,6 +112,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPlayerWidget* playerUI;
+	
+	//The three following properties are used in the objectives module.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UObjectiveWidget* objWidget;
+	
+	UPROPERTY()
+		float objectsBuilt; //tracks # objects built
+	
+	UPROPERTY()
+		float matsCollected; //tracks mats collected
 	
 	///////////////////////////
 	// Functions that define the behavior of the player's stats. Defined within the C++ file.
