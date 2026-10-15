@@ -207,11 +207,32 @@ void APlayerChar::FindObject()
 	
 	else
 	{
-		isBuilding = false;
-		objectsBuilt = objectsBuilt + 1.0f; //increases the objects built counter when ran
-		
-		objWidget->UpdatebuildObj(objectsBuilt);
+		if (IsValid(spawnedPart))
+		{
+			// Restore collision when the part is placed.
+			spawnedPart->Mesh->SetCollisionEnabled(
+				ECollisionEnabled::QueryAndPhysics);
+
+			// Stop moving the building part.
+			isBuilding = false;
+
+			// Update the building objectives.
+			objectsBuilt = objectsBuilt + 1.0f;
+
+			if (IsValid(objWidget))
+			{
+				objWidget->UpdatebuildObj(objectsBuilt);
+			}
+
+			// Clear the reference to the placed part.
+			spawnedPart = nullptr;
+		}
+		else
+		{
+			isBuilding = false;
+		}
 	}
+
 	
 }
 
@@ -310,32 +331,41 @@ void APlayerChar::UpdateResources(float woodAmount, float stoneAmount, FString b
 	}
 }
 //This is the actual building function; it will pass through whether building was a success or not as well.
+
 void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 {
+	isSuccess = false;
+
 	if (!isBuilding)
 	{
-		if (BuildingArray[buildingID] >= 1) //Checks to see if the player has any of the object passed through
+		if (BuildingArray.IsValidIndex(buildingID) &&
+			BuildingArray[buildingID] >= 1)
 		{
-			isBuilding = true;
 			FActorSpawnParameters SpawnParams;
+
 			FVector StartLocation = PlayerCamComp->GetComponentLocation();
 			FVector Direction = PlayerCamComp->GetForwardVector() * 400.0f;
 			FVector EndLocation = StartLocation + Direction;
 			FRotator myRot(0, 0, 0);
-			
-			BuildingArray[buildingID] = BuildingArray[buildingID] - 1;
-			
-			spawnedPart = GetWorld()->SpawnActor<ABuildingPart>(BuildPartClass, EndLocation, myRot, SpawnParams);
-			
-			isSuccess = true;
+
+			spawnedPart = GetWorld()->SpawnActor<ABuildingPart>(
+				BuildPartClass, EndLocation, myRot, SpawnParams);
+
+			if (IsValid(spawnedPart))
+			{
+				// Disable collision while positioning the building part.
+				spawnedPart->Mesh->SetCollisionEnabled(
+					ECollisionEnabled::NoCollision);
+
+				BuildingArray[buildingID] -= 1;
+
+				isBuilding = true;
+				isSuccess = true;
+			}
 		}
 	}
-	else
-		isSuccess = false;
-	{
-		
-	}
 }
+
 //Enables us to rotate the building part while we're in the middle of the build function.
 void APlayerChar::RotateBuilding()
 {
