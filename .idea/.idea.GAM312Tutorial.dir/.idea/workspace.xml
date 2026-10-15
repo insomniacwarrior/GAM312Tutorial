@@ -15,12 +15,17 @@
   <component name="ChangeListManager">
     <list default="true" id="9754dd30-fdf6-41bb-a99d-94f41ebd6ef2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAM312Tutorial.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AIChartut/AICharTut_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AIChartut/AICharTut_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Building/Ceiling_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Building/Ceiling_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Building/Floor_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Building/Floor_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Building/Wall_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Graphics/Textures/MAT_GrassBlade.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Graphics/Textures/MAT_GrassBlade.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/TestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/TestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_PlayerChar.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Widgets/Crafting_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/Crafting_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Widgets/Objective_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/Objective_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Widgets/Player_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Widgets/Player_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAM312Tutorial/PlayerChar.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +137,7 @@
     &quot;Uproject.GAM312Tutorial.executor&quot;: &quot;Run&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Blockout&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;devpass&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
